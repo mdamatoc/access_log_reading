@@ -10,11 +10,11 @@ header = ['remote_host', 'identity', 'username', 'date', 'request', 'status_code
 
 # Motivation of choosing | as the separator
 
-# After a quick exploratory data analysis and reading README.md, it's clear that there is no pipe in this .log, so, the
-# reading method will pipe as separator because the default separator is comma, which is possible in the .log. If the
-# reading method tries to change the engine from C (default) to Python, while trying to support the None separator, it
-# will automatically forces the column split to slit into other ones. This behavior is not consistent with the reading
-# strategy, so it won't be used.
+# After a quick exploratory data analysis and reading README.md provided by e-mail, it's clear that there is no pipe in
+# this .log, so, the reading method will use pipe as separator because the default separator is comma, which is possible
+# in the .log. If the reading method tries to change the engine from C (default) to Python, while trying to support the
+# None separator, it will automatically forces the column to slit into other ones. This behavior is not consistent
+# with the reading strategy, so it won't be used.
 
 access_log = pd.read_csv('test-access-001-1.log', header=None, sep='|')
 
@@ -36,7 +36,7 @@ PRIMEIRO ITEM
 
 Formatar uma saída do log em json contendo a lista de request apresentada no log,
 cada objeto dentro da lista deve conter as propriedades de uma entrada no log como
- remote_host, date, request, status_code, response_time, reffer, user_agent.
+remote_host, date, request, status_code, response_time, reffer, user_agent.
 """
 
 print("Processing item 1")
@@ -50,8 +50,11 @@ Encontrar os 10 maiores tempos de resposta com sucesso do servidor na chamada GE
 igual a "http://localhost/svnview?repos=devel&rev=latest&root=SVNview/tmpl&list_revs=1"
 
 Interpretando:
+
 resposta com sucesso -> status_code = 200
-chamada 'GET /maunal/' nao existe, mas parece um erro de digitacao. Buscarei requests que iniciem com 'GET /manual/'
+
+A chamada 'GET /maunal/' não existe, mas parece um erro de digitacao. Serão buscados requests que iniciem com 'GET /manual/'
+
 referrer = 'http://localhost/svnview?repos=devel&rev=latest&root=SVNview/tmpl&list_revs=1'
 """
 
@@ -81,10 +84,10 @@ posteriormente calcula-se o timezone UTC equivalente, para padronizar o datetime
 não tenha timezone. Por fim, transforma-se o datetime obtido para o formato UNIX.
 
 A coluna 'remote_host' contém o IP que deve ser convertido em hash MD5. De maneira anterior a conversão, o IP deve
-possuir um enconding: usarei UTF-8, pois não é necessário utilizar um enconding mais denso como LATIN-1, posto que IP's
-possuem somente números e pontos. Ainda neste item, é necessário retornar o dado codificado. Existem dois métodos 
-capazes de executar essa atividade, um deles, o digest(), retorna o IP em hash MD5 em byte-format, o outro, o hexdigest(),
-retorna o IP em hexadecimais. Como não especificação de formato de output, o hexadecimal foi escolhido por ser mais simples
+possuir um encoding: usarei o LATIN-1, por ser mais completo e não apresentar variação expressiva no desempenho do
+projeto. Ainda neste item, é necessário retornar o dado codificado. Existem dois métodos capazes de executar essa
+atividade, um deles, o digest(), retorna o IP em hash MD5 em byte-format, o outro, o hexdigest(), retorna o IP em
+hexadecimais. Como não há especificação de formato de output, o hexadecimal foi escolhido por ser mais simples
 de ser salvo em um arquivo de texto.
 """
 
@@ -120,7 +123,7 @@ grouped_requests_data_frame.to_csv('item_4_total_requests_por_dia_do_ano.csv', s
 QUINTO ITEM
 
 Formatar uma saída em arquivo físico com endereços de IP únicos, um IP por linha, contidos no log com a última data de
- request realizado pelo remote IP
+request realizado pelo remote IP
 """
 
 print("Processing item 5")
