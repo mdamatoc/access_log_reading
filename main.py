@@ -96,7 +96,7 @@ unix_hash_data_frame = data_frame.copy()
 
 unix_hash_data_frame['date'] = pd.to_datetime(unix_hash_data_frame['date']).dt.tz_convert(tz='UTC').dt.strftime("%Y-%m-%d %H:%M:%S")
 
-unix_hash_data_frame['remote_host'] = data_frame['remote_host'].apply(lambda x: hashlib.md5('192.141.19.154'.encode("latin-1")).hexdigest())
+unix_hash_data_frame['remote_host'] = data_frame['remote_host'].apply(lambda x: hashlib.md5(x.encode("latin-1")).hexdigest())
 
 unix_hash_data_frame[['remote_host', 'date']].to_json('item_3_date_unix_hash_md5_ip.json', orient='records', lines=True)
 
